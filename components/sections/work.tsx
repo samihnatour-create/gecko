@@ -49,12 +49,23 @@ function ProjectDialog({
         <CampaignArt project={project} />
         <div className="dialog-copy">
           <p className="eyebrow">
-            {project.sample ? site.labels.sample : site.workIntro.detailLabel} /{" "}
-            {project.year}
+            {project.placeholder ? "Creative placeholder" : "Supplied creative"} / {project.niche}
           </p>
           <h2 id="project-title">{project.title}</h2>
           <p className="eyebrow">{site.labels.details}</p>
           <p>{project.brief}</p>
+          <dl className="project-context">
+            <div><dt>Campaign objective</dt><dd>{project.objective}</dd></div>
+            <div><dt>Our contribution</dt><dd>{project.contribution}</dd></div>
+          </dl>
+          <h3>Campaign results</h3>
+          {project.results.length ? (
+            <dl className="project-results">
+              {project.results.map((result) => (
+                <div key={result.label}><dt>{result.label}</dt><dd>{result.value}</dd><p>{result.context}</p></div>
+              ))}
+            </dl>
+          ) : <p className="results-pending">Creative preview only. Performance data is not available for this example.</p>}
           <h3>{site.labels.deliverables}</h3>
           <div className="tags">
             {project.deliverables.map((tag) => (
@@ -77,10 +88,10 @@ export function Work() {
   const root = useRef<HTMLElement>(null);
   const categories = [
     site.labels.allWork,
-    ...new Set(site.work.map((p) => p.category)),
+    ...site.workNiches,
   ];
   const filtered = site.work.filter(
-    (p) => filter === site.labels.allWork || p.category === filter,
+    (p) => filter === site.labels.allWork || p.niche === filter,
   );
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -153,11 +164,14 @@ export function Work() {
             <span>
               {category === site.labels.allWork
                 ? site.work.length
-                : site.work.filter((p) => p.category === category).length}
+                : site.work.filter((p) => p.niche === category).length}
             </span>
           </button>
         ))}
       </div>
+      <p className="work-preview-note" role="status">
+        {filter === site.labels.allWork ? "Find inspiration for your next ad." : `Explore ${filter.toLowerCase()} creative.`} Supplied examples and concept placeholders show creative approaches, with no performance claims.
+      </p>
       <div className="work-grid">
         {filtered.map((project, i) => (
           <article
@@ -169,9 +183,9 @@ export function Work() {
               onClick={() => setSelected(project)}
               aria-label={`View ${project.client}: ${project.title}`}
             >
-              <div className="work-art-frame">
+              <div className={`work-art-frame ${project.image ? "work-art-full" : ""}`}>
                 <CampaignArt project={project} />
-
+                <span className="sample-badge">{project.placeholder ? "Creative placeholder" : "Creative preview"}</span>
                 <span className="project-open" aria-hidden="true">
                   <ArrowUpRight />
                 </span>
@@ -184,8 +198,11 @@ export function Work() {
                   </p>
                   <h3>{project.title}</h3>
                 </div>
-                <span className="work-category">{project.category}</span>
+                <span className="work-category">{project.niche}</span>
               </div>
+              <p className="work-result-summary">
+                {project.results.length ? project.results.map((result) => `${result.value} ${result.label}`).join(" · ") : "Creative preview · No performance claims"}
+              </p>
             </button>
           </article>
         ))}
