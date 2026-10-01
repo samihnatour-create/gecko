@@ -163,7 +163,7 @@ export function Hero() {
       </div>
       <div className="mobile-creative-showcase">
         <div className="mobile-creative-heading">
-          <h2 id="creative-preview-title">A glimpse of our work</h2>
+          <h2 id="creative-preview-title">Explore our ad creative</h2>
           <a className="text-link" href="#work">
             {site.labels.work}<ArrowUpRight size={16} />
           </a>

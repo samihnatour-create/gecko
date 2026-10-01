@@ -45,22 +45,22 @@ export function Results() {
   return <section id="results" ref={root} className="results-section wrap" aria-labelledby="results-title">
     <div className="results-inner">
       <div className="results-heading">
-        <p className="eyebrow">A little perspective / results & relationships</p>
-        <h2 id="results-title">Good work.<br /><em>Lasting impact.</em></h2>
-        <p className="results-disclaimer">{site.impact.disclaimer}. Approved results and client relationships will replace these placeholders.</p>
+        <p className="eyebrow">Our founders’ experience / before Gecko</p>
+        <h2 id="results-title">A new agency.<br /><em>Experienced founders.</em></h2>
+        <p className="results-disclaimer">{site.impact.disclaimer}</p>
       </div>
       <dl className="results-metrics">{site.impact.stats.map((stat, i) => <div className="results-metric" key={stat.label} data-result-reveal>
         <dt>{stat.label}</dt>
-        <dd><span className="results-sr">{stat.value}, illustrative placeholder</span><span aria-hidden="true" data-result-count={i}>{stat.value}</span></dd>
-        <span className="results-caption">Illustrative placeholder</span>
+        <dd><span className="results-sr">{stat.value}, founders’ prior experience</span><span aria-hidden="true" data-result-count={i}>{stat.value}</span></dd>
+        <span className="results-caption">{i < 2 ? "Our cofounder’s prior creative work" : "Creative strategy & media buying"}</span>
       </div>)}</dl>
       <div className="results-clients">
         <div className="results-client-heading">
-          <p className="eyebrow">Client showcase / awaiting approved names & logos</p>
+          <p className="eyebrow">Our cofounder’s prior media buying work included these brands—not Gecko clients</p>
         </div>
         <div className="results-logo-window" data-result-reveal><div className="results-logo-track">
-          {[0, 1].map(copy => <ul key={copy} className="results-logos" aria-label={copy === 0 ? "Client logo placeholders" : undefined} aria-hidden={copy === 1 ? true : undefined}>
-            {[1, 2, 3, 4, 5, 6].map(i => <li key={i}><span className="results-logo-slot">Client {String(i).padStart(2, "0")}</span><span>Logo placeholder</span></li>)}
+          {[0, 1].map(copy => <ul key={copy} className="results-logos" aria-label={copy === 0 ? "Brands from our cofounder’s prior media buying experience" : undefined} aria-hidden={copy === 1 ? true : undefined}>
+            {["Amazon", "PepsiCo", "Johnson’s", "Amazon", "PepsiCo", "Johnson’s"].map((brand, i) => <li key={i} aria-hidden={i >= 3 ? true : undefined}><span className="results-logo-slot">{brand}</span><span>Prior media buying experience</span></li>)}
           </ul>)}
         </div></div>
       </div>
