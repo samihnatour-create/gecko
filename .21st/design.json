@@ -31,6 +31,7 @@
     "avoid": []
   },
   "decisions": [
+    "2026-10-01: Mobile and tablet hero uses a standalone VSL, primary CTA, and separate continuously looping upright ad strip without brand captions. Reduced motion uses a static scrollable strip. Desktop retains the floating creative composition.",
     "2026-09-30: Editorial proof selected below hero. Gray client logos move continuously left to right without a pause button or hover pause, as requested. Reduced motion uses a static grid. Metrics and logo slots remain labeled placeholders until approved assets are supplied.",
     "Playful editorial direction approved by user",
     "Official Gecko Media logo retained without distortion",

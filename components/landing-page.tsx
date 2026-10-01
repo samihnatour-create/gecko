@@ -8,7 +8,7 @@ import { motionSettings } from "@/lib/motion";
 import { GeckoLogo } from "./logo";
 import { Hero } from "./sections/hero";
 import { Results } from "./sections/results";
-import { Studio, Services } from "./sections/studio";
+import { Services } from "./sections/studio";
 import { Work } from "./sections/work";
 import { Reviews } from "./sections/reviews";
 import { Contact } from "./sections/contact";
@@ -113,7 +113,6 @@ export function LandingPage() {
       <main id="main">
         <Hero />
         <Results />
-        <Studio />
         <Work />
         <Services />
         <Reviews />

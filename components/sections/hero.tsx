@@ -1,11 +1,12 @@
 "use client";
 import { useLayoutEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { ArrowUpRight, Play } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { site } from "@/lib/content";
 import { motionSettings } from "@/lib/motion";
-import { CampaignArt, GeckoHand } from "../artwork";
+import { GeckoHand } from "../artwork";
 import { RevealWords } from "../reveal-words";
 
 // Editorial VSL adaptation of the previously inspected 21st video hero.
@@ -68,13 +69,28 @@ export function Hero() {
       </div>
       <div className="creative-stage" id="reel">
         <div className="hero-creative creative-left" aria-hidden="true">
-          {site.work[0] && <CampaignArt project={site.work[0]} />}
+          <Image
+            src={site.hero.creatives.left}
+            alt=""
+            fill
+            sizes="(max-width: 600px) 31vw, 22vw"
+          />
         </div>
         <div className="hero-creative creative-right" aria-hidden="true">
-          {site.work[1] && <CampaignArt project={site.work[1]} />}
+          <Image
+            src={site.hero.creatives.right}
+            alt=""
+            fill
+            sizes="(max-width: 600px) 31vw, 22vw"
+          />
         </div>
         <div className="hero-creative creative-bottom" aria-hidden="true">
-          {site.work[3] && <CampaignArt project={site.work[3]} />}
+          <Image
+            src={site.hero.creatives.bottom}
+            alt=""
+            fill
+            sizes="15vw"
+          />
         </div>
         <div className={`vsl-player ${playing ? "is-playing" : ""}`}>
           {hasVideo ? (
@@ -144,6 +160,43 @@ export function Hero() {
           {site.labels.work}
           <ArrowUpRight size={17} />
         </a>
+      </div>
+      <div className="mobile-creative-showcase">
+        <div className="mobile-creative-heading">
+          <h2 id="creative-preview-title">A glimpse of our work</h2>
+          <a className="text-link" href="#work">
+            {site.labels.work}<ArrowUpRight size={16} />
+          </a>
+        </div>
+        <div
+          className="mobile-creative-strip"
+          role="region"
+          aria-labelledby="creative-preview-title"
+        >
+          <div className="mobile-creative-track">
+          {[0, 1, 2].map((copy) => (
+          <div className="mobile-creative-group" key={copy} aria-hidden={copy > 0 ? true : undefined}>
+          {[
+            { src: site.hero.creatives.left, name: "SHEKO", width: 1080, height: 1920 },
+            { src: site.hero.creatives.right, name: "Ornevia", width: 1080, height: 1920 },
+            { src: site.hero.creatives.bottom, name: "Moments & Candles", width: 1080, height: 1350 },
+          ].map((creative) => (
+            <figure className="mobile-creative-card" key={creative.src}>
+              <div className="mobile-creative-image">
+                <Image
+                  src={creative.src}
+                  alt={copy === 0 ? `${creative.name} static ad creative` : ""}
+                  width={creative.width}
+                  height={creative.height}
+                  sizes="(max-width: 899px) 180px, 1px"
+                />
+              </div>
+            </figure>
+          ))}
+          </div>
+          ))}
+          </div>
+        </div>
       </div>
     </section>
   );

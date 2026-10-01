@@ -45,6 +45,11 @@ export const site = {
     signature: "MADE TO STICK. ↗",
   },
   hero: {
+    creatives: {
+      left: "/creatives/sheko.webp",
+      right: "/creatives/ornevia.webp",
+      bottom: "/creatives/moments-candles.webp",
+    },
     eyebrow: "Independent creative & advertising studio",
     headline: ["Made to", "stand out."],
     posterTitle: "Creative that moves.",

@@ -1883,6 +1883,12 @@ h1 > .serif {
   box-shadow: 0 13px 35px #1e2e1918;
   pointer-events: none;
 }
+.hero-creative > img {
+  object-fit: cover;
+}
+.mobile-creative-showcase {
+  display: none;
+}
 .creative-left {
   left: 3%;
   top: 2%;
@@ -2180,7 +2186,7 @@ h1 > .serif {
   .vsl-poster-type {
     top: 20px;
     left: 20px;
-    font-size: 30px;
+    font-size: clamp(22px, 6vw, 30px);
     max-width: 56%;
   }
   .vsl-hand {
@@ -2306,4 +2312,88 @@ h1 > .serif {
   .project-button {
     will-change: auto;
   }
+}
+
+/* Give the VSL and ad previews their own space on touch layouts. */
+@media (max-width: 899px) {
+  .creative-stage {
+    height: auto;
+    margin: 24px 20px 0;
+    width: auto;
+  }
+  .creative-stage .hero-creative {
+    display: none;
+  }
+  .creative-stage .vsl-player {
+    width: 100%;
+    max-width: 680px;
+    aspect-ratio: 16 / 9;
+    box-shadow: none;
+  }
+  .vsl-actions {
+    margin-top: 22px;
+  }
+  .vsl-actions > .text-link {
+    display: none;
+  }
+  .mobile-creative-showcase {
+    display: block;
+    margin-top: 36px;
+  }
+  .mobile-creative-heading {
+    margin: 0 20px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .mobile-creative-heading h2 {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+  .mobile-creative-heading .text-link {
+    font-size: 11px;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .mobile-creative-strip {
+    overflow: hidden;
+    padding-bottom: 12px;
+  }
+  .mobile-creative-track {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    animation: creative-marquee 24s linear infinite;
+  }
+  .mobile-creative-group {
+    display: flex;
+    gap: 14px;
+  }
+  .mobile-creative-card {
+    flex: 0 0 180px;
+    margin: 0;
+  }
+  .mobile-creative-image {
+    height: 320px;
+    display: grid;
+    align-items: center;
+    background: var(--paper);
+    overflow: hidden;
+    border-radius: 6px;
+  }
+  .mobile-creative-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+@keyframes creative-marquee {
+  to { transform: translateX(-582px); }
+}
+@media (max-width: 899px) and (prefers-reduced-motion: reduce) {
+  .mobile-creative-strip { overflow-x: auto; }
+  .mobile-creative-track { animation: none; }
+  .mobile-creative-group[aria-hidden="true"] { display: none; }
 }
