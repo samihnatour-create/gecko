@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { site, type Project } from "@/lib/content";
 import { motionSettings } from "@/lib/motion";
 import { CampaignArt } from "../artwork";
+import { ProjectGallery } from "../project-gallery";
 
 function ProjectDialog({
   project,
@@ -37,35 +38,40 @@ function ProjectDialog({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="dialog-inner">
+      <header className="project-dialog-header">
+        <div><strong>{project.client}</strong><span>{project.niche}</span></div>
         <button
-          className="round-button dialog-close"
+          className="round-button"
           onClick={onClose}
           aria-label={site.labels.close}
           autoFocus
         >
           <X />
         </button>
-        <CampaignArt project={project} />
+      </header>
+      <div className="dialog-inner">
+        <ProjectGallery key={project.id} project={project} />
         <div className="dialog-copy">
           <p className="eyebrow">
-            {project.placeholder ? "Creative placeholder" : "Supplied creative"} / {project.niche}
+            Campaign creative
           </p>
           <h2 id="project-title">{project.title}</h2>
           <p className="eyebrow">{site.labels.details}</p>
           <p>{project.brief}</p>
-          <dl className="project-context">
-            <div><dt>Campaign objective</dt><dd>{project.objective}</dd></div>
-            <div><dt>Our contribution</dt><dd>{project.contribution}</dd></div>
-          </dl>
-          <h3>Campaign results</h3>
+          {project.message && <div className="project-message"><h3>The message</h3><p>{project.message}</p></div>}
+          {project.contribution && (
+            <dl className="project-context">
+              <div><dt>Our contribution</dt><dd>{project.contribution}</dd></div>
+            </dl>
+          )}
+          <h3>{project.results.length ? "Campaign results" : "Creative takeaway"}</h3>
           {project.results.length ? (
             <dl className="project-results">
               {project.results.map((result) => (
                 <div key={result.label}><dt>{result.label}</dt><dd>{result.value}</dd><p>{result.context}</p></div>
               ))}
             </dl>
-          ) : <p className="results-pending">Creative preview only. Performance data is not available for this example.</p>}
+          ) : <p className="creative-takeaway">{project.takeaway}</p>}
           <h3>{site.labels.deliverables}</h3>
           <div className="tags">
             {project.deliverables.map((tag) => (
@@ -170,7 +176,7 @@ export function Work() {
         ))}
       </div>
       <p className="work-preview-note" role="status">
-        {filter === site.labels.allWork ? "Find inspiration for your next ad." : `Explore ${filter.toLowerCase()} creative.`} Supplied examples and concept placeholders show creative approaches, with no performance claims.
+        {filter === site.labels.allWork ? "Find inspiration for your next ad." : `Explore ${filter.toLowerCase()} creative.`}
       </p>
       <div className="work-grid">
         {filtered.map((project, i) => (
@@ -183,9 +189,8 @@ export function Work() {
               onClick={() => setSelected(project)}
               aria-label={`View ${project.client}: ${project.title}`}
             >
-              <div className={`work-art-frame ${project.image ? "work-art-full" : ""}`}>
+              <div className="work-art-frame work-art-cover">
                 <CampaignArt project={project} />
-                <span className="sample-badge">{project.placeholder ? "Creative placeholder" : "Creative preview"}</span>
                 <span className="project-open" aria-hidden="true">
                   <ArrowUpRight />
                 </span>
@@ -194,15 +199,11 @@ export function Work() {
                 <div>
                   <p>
                     {project.client}
-                    <span> / {project.year}</span>
                   </p>
                   <h3>{project.title}</h3>
                 </div>
                 <span className="work-category">{project.niche}</span>
               </div>
-              <p className="work-result-summary">
-                {project.results.length ? project.results.map((result) => `${result.value} ${result.label}`).join(" · ") : "Creative preview · No performance claims"}
-              </p>
             </button>
           </article>
         ))}

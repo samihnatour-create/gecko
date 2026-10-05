@@ -1,5 +1,6 @@
 "use client";
 import { useId, useState } from "react";
+import Image from "next/image";
 import type { Project } from "@/lib/content";
 
 export function GeckoHand({ className = "" }: { className?: string }) {
@@ -25,9 +26,12 @@ export function CampaignArt({
   if (project.image && failedSource !== project.image)
     return (
       <div className={`campaign-art ${className}`}>
-        <img
-          ref={(el) => {
-            if (el?.complete && el.naturalWidth === 0)
+        <Image
+          width={1024}
+          height={1280}
+          sizes="(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 620px"
+          onLoad={(event) => {
+            if (event.currentTarget.naturalWidth === 0)
               setFailedSource(project.image);
           }}
           src={project.image}

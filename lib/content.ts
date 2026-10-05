@@ -2,18 +2,20 @@
 import { workNiches, workProjects } from "./work-content";
 export type Project = {
   niche: string;
-  objective: string;
-  contribution: string;
-  placeholder: boolean;
+  takeaway: string;
+  message?: string;
+  // Publish this field only after the team's actual contribution is confirmed.
+  contribution?: string;
   results: { label: string; value: string; context: string }[];
   id: string;
   client: string;
   title: string;
   category: string;
-  year: string;
   art: "morrow" | "sumi" | "form" | "rove" | "mono" | "hush";
   image: string;
   imageAlt: string;
+  video?: string;
+  gallery?: { src: string; alt: string; width: number; height: number }[];
   brief: string;
   deliverables: string[];
   sample: boolean;
@@ -105,7 +107,7 @@ export const site = {
     eyebrow: "Explore the creative approach",
     title: "A clear message.",
     accent: "A reason to click.",
-    note: "Explore creative previews across ecommerce categories.",
+    note: "Four creative approaches across ecommerce categories.",
     detailLabel: "Project preview",
   },
   workNiches,
@@ -139,9 +141,8 @@ export const site = {
   ],
   impact: {
     label: "Our founders’ experience",
-    disclaimer: "Experience gained by our founders before Gecko Media. These figures describe prior work, not Gecko client results.",
     stats: [
-      { value: "500+", label: "Image & video assets created" },
+      { value: "1k+", label: "Image & video assets created" },
       { value: "20+", label: "Businesses supported with creative strategy" },
       { value: "2", label: "Founders with industry experience" },
     ],
