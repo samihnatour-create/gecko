@@ -185,15 +185,11 @@ export const site = {
       "Tell us what you sell, how you’re advertising, and where you’re getting stuck. We’ll discuss how creative, media buying, or branding could help—and whether we’re the right fit.",
     cta: "Let’s talk growth",
     email: "hello@geckomedia.net",
-    calendarUrl: process.env.NEXT_PUBLIC_CALENDLY_URL || "",
-    preview: "Booking details coming soon",
-    previewNote:
-      "Online booking is coming soon. This calendar is a preview.",
+    calendarUrl: process.env.NEXT_PUBLIC_CALENDLY_URL || "https://calendly.com/geckomedia/30min",
     meetingTitle: "Let’s talk growth.",
     duration: "30 minutes",
-    meetingType: "Video call",
+    meetingType: "Microsoft Teams",
     meetingDescription: "A conversation about your goals, current ads, and where you need support.",
-    selectDate: "Select a date & time",
     calendarTitle: "Book a call with Gecko Media",
   },
   footer: {

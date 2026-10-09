@@ -3,10 +3,11 @@ import { ArrowUpRight, ArrowUp, Clock3, Video, Mail } from "lucide-react";
 import { site } from "@/lib/content";
 import { GeckoLogo } from "../logo";
 import { GeckoHand } from "../artwork";
+import { CalendlyCalendar } from "../calendly-calendar";
 function bookingUrl(raw: string) {
   try {
     const url = new URL(raw);
-    return url.protocol === "https:" && !url.pathname.includes("your-team")
+    return url.protocol === "https:" && url.hostname === "calendly.com" && !url.pathname.includes("your-team")
       ? url.href
       : null;
   } catch {
@@ -58,21 +59,12 @@ export function Contact() {
               <em>{site.contact.accent}</em>
             </h2>
             <p>{site.contact.description}</p>
+            <p className="booking-meta">{site.contact.duration} · {site.contact.meetingType}</p>
             <GeckoHand className="contact-flower" />
           </div>
           <div className="calendar-container">
             {calendar ? (
-              <>
-                <iframe
-                  title={site.contact.calendarTitle}
-                  src={calendar}
-                  loading="lazy"
-                />
-                <a href={calendar} target="_blank" rel="noreferrer">
-                  {site.contact.cta}
-                  <ArrowUpRight size={18} />
-                </a>
-              </>
+              <CalendlyCalendar key={calendar} url={calendar} />
             ) : (
               <EmailContact />
             )}
