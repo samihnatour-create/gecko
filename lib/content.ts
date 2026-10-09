@@ -23,6 +23,7 @@ export type Project = {
 export const site = {
   brand: {
     name: "gecko media",
+    url: "https://geckomedia.net",
     logo: "/gecko-logo.png",
     description: "Ad creative, media buying, and branding for ecommerce brands and growing businesses. One team to test, learn, and improve your ads with less back-and-forth.",
     title: "Gecko Media — Ad Creative & Media Buying for Growing Brands",
@@ -183,6 +184,7 @@ export const site = {
     description:
       "Tell us what you sell, how you’re advertising, and where you’re getting stuck. We’ll discuss how creative, media buying, or branding could help—and whether we’re the right fit.",
     cta: "Let’s talk growth",
+    email: "hello@geckomedia.net",
     calendarUrl: process.env.NEXT_PUBLIC_CALENDLY_URL || "",
     preview: "Booking details coming soon",
     previewNote:
@@ -197,6 +199,9 @@ export const site = {
   footer: {
     note: "Creative strategy. Media buying. A partner for the long run.",
     copyright: "Gecko Media. All rights reserved.",
-    links: [] as { label: string; href: string }[],
+    links: [
+      { label: "Email us", href: "mailto:hello@geckomedia.net" },
+      { label: "Privacy", href: "/privacy" },
+    ] as { label: string; href: string }[],
   },
 };

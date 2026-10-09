@@ -5,3 +5,7 @@ node_modules
 out
 *.tsbuildinfo
 work/
+
+.vercel
+.env*
+!.env.example

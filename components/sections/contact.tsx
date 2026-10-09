@@ -1,6 +1,5 @@
 "use client";
-import { useState } from "react";
-import { ArrowUpRight, ArrowUp, Clock3, Video } from "lucide-react";
+import { ArrowUpRight, ArrowUp, Clock3, Video, Mail } from "lucide-react";
 import { site } from "@/lib/content";
 import { GeckoLogo } from "../logo";
 import { GeckoHand } from "../artwork";
@@ -14,15 +13,10 @@ function bookingUrl(raw: string) {
     return null;
   }
 }
-function CalendarPreview() {
-  const [today] = useState(() => new Date());
-
-  const year = today?.getFullYear() ?? 2026,
-    month = today?.getMonth() ?? 8;
-  const days = new Date(year, month + 1, 0).getDate();
-  const offset = (new Date(year, month, 1).getDay() + 6) % 7;
+function EmailContact() {
+  const subject = encodeURIComponent("Let’s talk growth — Gecko Media");
   return (
-    <div className="calendar-preview" aria-label={site.contact.previewNote}>
+    <div className="calendar-preview">
       <div className="calendar-profile">
         <GeckoHand />
         <h3>{site.contact.meetingTitle}</h3>
@@ -36,37 +30,13 @@ function CalendarPreview() {
           {site.contact.meetingDescription}
         </p>
       </div>
-      <div className="calendar-dates">
-        <h3>{site.contact.selectDate}</h3>
-        <p className="calendar-month">
-          {new Date(year, month, 1).toLocaleDateString("en-US", {
-            month: "long",
-            year: "numeric",
-          })}
-        </p>
-        <div className="calendar-week">
-          {["M", "T", "W", "T", "F", "S", "S"].map((day, i) => (
-            <span key={i}>{day}</span>
-          ))}
-        </div>
-        <div className="calendar-days">
-          {Array.from({ length: offset }, (_, i) => (
-            <span key={`blank-${i}`} />
-          ))}
-          {Array.from({ length: days }, (_, i) => (
-            <span
-              key={i}
-              className={
-                i + 1 >= (today?.getDate() ?? 24) && (i + offset) % 7 < 5
-                  ? "calendar-day upcoming"
-                  : "calendar-day"
-              }
-            >
-              {i + 1}
-            </span>
-          ))}
-        </div>
-        <p className="calendar-connection-note">{site.contact.previewNote}</p>
+      <div className="calendar-dates contact-email">
+        <h3>Start with a quick introduction.</h3>
+        <p>Tell us about your business and what you want to improve. We’ll reply and arrange a time to talk.</p>
+        <a className="button button-dark" href={`mailto:${site.contact.email}?subject=${subject}`}>
+          <Mail size={18} /> Email Gecko Media <ArrowUpRight size={18} />
+        </a>
+        <a className="contact-email-address" href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
       </div>
     </div>
   );
@@ -104,7 +74,7 @@ export function Contact() {
                 </a>
               </>
             ) : (
-              <CalendarPreview />
+              <EmailContact />
             )}
           </div>
         </div>

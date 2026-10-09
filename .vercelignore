@@ -1,0 +1,7 @@
+outputs/
+work/
+.agents/
+.21st/
+.npm-cache/
+*.tsbuildinfo
+.env*
