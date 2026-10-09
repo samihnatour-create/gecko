@@ -1981,7 +1981,7 @@ h1 > .serif {
   box-shadow: 0 16px 45px #24462d18;
   border: 1px solid #1c322715;
   border-radius: 13px;
-  background: #fff;
+  background: var(--paper);
   min-width: 0;
 }
 .calendar-preview {
@@ -2114,7 +2114,8 @@ h1 > .serif {
 .calendly-embed {
   width: 100%;
   min-width: 320px;
-  height: 740px;
+  height: clamp(600px, 80svh, 740px);
+  background: var(--paper);
 }
 .contact-booking .calendly-embed iframe {
   display: block;

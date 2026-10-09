@@ -46,7 +46,8 @@ export function CalendlyCalendar({ url }: { url: string }) {
 
     const embedUrl = new URL(url);
     embedUrl.searchParams.set("hide_event_type_details", "1");
-    embedUrl.searchParams.set("background_color", "ffffff");
+    const paper = getComputedStyle(parent).getPropertyValue("--paper").trim();
+    embedUrl.searchParams.set("background_color", paper.replace(/^#/, ""));
     embedUrl.searchParams.set("text_color", "171a17");
     embedUrl.searchParams.set("primary_color", "1d4a26");
 
@@ -54,7 +55,8 @@ export function CalendlyCalendar({ url }: { url: string }) {
       calendly.initInlineWidget({
         url: embedUrl.href,
         parentElement: parent,
-        resize: true,
+        // Keep the time list inside the widget instead of extending the page.
+        resize: false,
       });
       const frame = parent.querySelector("iframe");
       if (frame) frame.title = site.contact.calendarTitle;
