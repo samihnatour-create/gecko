@@ -6,7 +6,7 @@ import { posts, readingMinutes } from "@/lib/blog";
 
 export function Intro() {
   return (
-    <section className="intro wrap" id="intro" aria-labelledby="intro-title" data-blob="0.86 0.2 1.3 1">
+    <section className="intro wrap" id="intro" aria-labelledby="intro-title" data-blob="0.86 0.2 1.3 1" data-blob-mobile="0.95 -0.55 0.55 0.55">
       <h2 id="intro-title" className="sr-only">{site.manifesto.eyebrow}</h2>
       <p className="scrub-text blend" data-scrub-words>
         {site.manifesto.description}
@@ -42,7 +42,7 @@ export function Intro() {
 
 export function Partners() {
   return (
-    <section className="partners wrap" aria-labelledby="partners-title" data-blob="0.95 0.05 1.15 1">
+    <section className="partners wrap" aria-labelledby="partners-title" data-blob="0.95 0.05 1.15 1" data-blob-mobile="0.95 0.75 0.4 0.45">
       <div className="partners-label">
         <p className="label">Trusted by</p>
         <h2 id="partners-title" className="boxed-label">Partners</h2>
@@ -68,7 +68,7 @@ export function Partners() {
 
 export function ProcessRows() {
   return (
-    <section className="rows-section wrap" aria-labelledby="process-title" data-blob="0.9 0.1 0.6 0.85">
+    <section className="rows-section wrap" aria-labelledby="process-title" data-blob="0.9 0.1 0.6 0.85" data-blob-mobile="0.95 0.55 0.4 0.45">
       <div className="rows-head">
         <h2 id="process-title" className="mega" data-reveal>
           Five steps. <em>No guesswork.</em>
@@ -95,7 +95,7 @@ export function ProcessRows() {
 
 export function FieldNotes() {
   return (
-    <section className="rows-section wrap" aria-labelledby="notes-title" data-blob="-0.95 0.1 0.75 0.9">
+    <section className="rows-section wrap" aria-labelledby="notes-title" data-blob="-0.95 0.1 0.75 0.9" data-blob-mobile="-0.95 0.55 0.4 0.45">
       <div className="rows-head">
         <h2 id="notes-title" className="mega" data-reveal>
           Field <em>notes.</em>

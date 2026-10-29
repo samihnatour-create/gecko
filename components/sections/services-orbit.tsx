@@ -68,6 +68,7 @@ export function ServicesOrbit() {
       id="services"
       aria-labelledby="services-title"
       data-blob="0 0.02 0.4 1"
+      data-blob-mobile="0.9 -0.75 0.42 0.6"
       style={{ "--services": site.services.length } as CSSProperties}
     >
       <div className="orbit-sticky">

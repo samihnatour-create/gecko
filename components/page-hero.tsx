@@ -18,7 +18,8 @@ export function PageHero({
 }) {
   const long = title.length > 40;
   return (
-    <section className="page-hero" aria-labelledby="page-title" data-blob={long ? "0.78 -0.15 0.55 1" : "0.6 -0.05 0.72 1"}>
+    <section className="page-hero" aria-labelledby="page-title" data-blob={long ? "0.78 -0.15 0.55 1" : "0.6 -0.05 0.72 1"}
+      data-blob-mobile="0.75 -0.5 0.55 0.85">
       <svg className="rings" viewBox="0 0 1000 1000" aria-hidden="true">
         <circle cx="720" cy="440" r="330" />
         <circle cx="560" cy="520" r="420" />

@@ -102,7 +102,7 @@ export function Work() {
   }, []);
   const columns = [site.work.filter((_, i) => i % 2 === 0), site.work.filter((_, i) => i % 2 === 1)];
   return (
-    <section ref={root} className="work-section wrap" id="work" aria-labelledby="work-title" data-blob="-0.85 -0.55 0.9 1">
+    <section ref={root} className="work-section wrap" id="work" aria-labelledby="work-title" data-blob="-0.85 -0.55 0.9 1" data-blob-mobile="-0.95 -0.75 0.45 0.55">
       <aside className="work-aside">
         <h2 id="work-title" className="label">{site.workIntro.eyebrow}</h2>
         <p className="work-count">0{site.work.length}</p>

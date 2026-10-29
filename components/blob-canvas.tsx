@@ -2,9 +2,13 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import * as THREE from "three";
+import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
+import { mergeVertices } from "three/addons/utils/BufferGeometryUtils.js";
+import { geckoHandPath, geckoHandViewBox } from "@/lib/gecko-hand";
 
-// A fixed WebGL blob in the brand gradient. Elements marked data-blob="x y size opacity"
+// A fixed WebGL gecko hand in the brand gradient. Elements marked data-blob="x y size opacity"
 // set where it sits while they cross the middle of the viewport (x, y in -1..1, size × min viewport side).
+// On narrow screens data-blob-mobile is used instead, or a smaller, fainter version of data-blob.
 
 const noise = /* glsl */ `
 vec3 mod289(vec3 x){return x-floor(x*(1./289.))*289.;}
@@ -29,14 +33,16 @@ float snoise(vec3 v){
 
 const vertexShader = /* glsl */ `
 uniform float uTime; uniform vec2 uPointer;
-varying vec3 vWorld; varying vec3 vObj;
+varying vec3 vWorld; varying vec3 vObj; varying vec3 vNormal;
 ${noise}
 void main(){
   vec3 p = position;
-  float n = snoise(p * 0.75 + vec3(uTime * 0.16, uTime * 0.1, 0.0));
-  n += 0.18 * snoise(p * 1.6 - vec3(0.0, uTime * 0.2, uTime * 0.08));
-  p += normal * (n * 0.16 + dot(normal.xy, uPointer) * 0.07);
+  // A slow, soft wobble so the hand feels alive without losing its silhouette.
+  float n = snoise(p * 0.9 + vec3(uTime * 0.16, uTime * 0.1, 0.0));
+  p += normal * n * 0.05;
+  p.z += sin(p.x * 1.6 + uTime * 0.8) * 0.04 + dot(p.xy, uPointer) * 0.05;
   vObj = p;
+  vNormal = normalize(mat3(modelMatrix) * normal);
   vec4 world = modelMatrix * vec4(p, 1.0);
   vWorld = world.xyz;
   gl_Position = projectionMatrix * viewMatrix * world;
@@ -44,22 +50,25 @@ void main(){
 
 const fragmentShader = /* glsl */ `
 uniform float uTime; uniform float uAlpha;
-varying vec3 vWorld; varying vec3 vObj;
+varying vec3 vWorld; varying vec3 vObj; varying vec3 vNormal;
 ${noise}
 void main(){
-  vec3 n = normalize(cross(dFdx(vWorld), dFdy(vWorld)));
+  // Smooth geometry normals keep the bevel glossy instead of faceted.
+  vec3 n = normalize(vNormal);
   vec3 v = normalize(cameraPosition - vWorld);
   float fres = pow(1.0 - max(dot(n, v), 0.0), 2.2);
   vec3 yellow = vec3(0.949, 0.965, 0.169);
   vec3 lime = vec3(0.639, 0.965, 0.0);
   vec3 cyan = vec3(0.0, 0.929, 0.855);
   vec3 deep = vec3(0.02, 0.36, 0.33);
-  float g = 0.5 + 0.42 * n.y - 0.25 * n.x + 0.1 * snoise(vObj * 0.8 + uTime * 0.1);
+  // Gradient runs across the hand (yellow bottom-left to cyan top-right), shaded by the surface.
+  float g = 0.5 + 0.38 * vObj.y + 0.22 * vObj.x + 0.18 * n.y + 0.1 * snoise(vObj * 0.8 + uTime * 0.1);
   vec3 col = mix(cyan, lime, smoothstep(0.18, 0.55, g));
   col = mix(col, yellow, smoothstep(0.62, 0.95, g));
-  float light = 0.62 + 0.38 * dot(n, normalize(vec3(-0.5, 0.7, 0.6)));
+  float light = 0.7 + 0.3 * dot(n, normalize(vec3(-0.5, 0.7, 0.6)));
+  float spec = pow(max(dot(reflect(-normalize(vec3(-0.4, 0.6, 0.7)), n), v), 0.0), 24.0);
   col = mix(deep, col, clamp(light, 0.0, 1.0));
-  col += fres * vec3(0.9, 1.0, 0.85) * 0.55;
+  col += fres * vec3(0.9, 1.0, 0.85) * 0.45 + spec * 0.35;
   float grain = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
   col += (grain - 0.5) * 0.045;
   // Feather the silhouette so the blob reads as soft light rather than a hard object.
@@ -69,9 +78,38 @@ void main(){
 
 type Pose = { x: number; y: number; size: number; alpha: number };
 const parse = (el: Element): Pose => {
-  const [x = 0, y = 0, size = 0.6, alpha = 1] = (el.getAttribute("data-blob") || "").split(/\s+/).map(Number);
-  return { x, y, size, alpha };
+  const narrow = window.innerWidth < 800;
+  const mobile = narrow && el.getAttribute("data-blob-mobile");
+  const [x = 0, y = 0, size = 0.6, alpha = 1] = (mobile || el.getAttribute("data-blob") || "").split(/\s+/).map(Number);
+  return narrow && !mobile ? { x, y, size: size * 0.6, alpha: alpha * 0.6 } : { x, y, size, alpha };
 };
+
+// Extrude the logo outline into a rounded 3D hand, centred and scaled to fit a unit circle.
+function handGeometry() {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${geckoHandViewBox}"><path d="${geckoHandPath}"/></svg>`;
+  const shapes = new SVGLoader().parse(svg).paths.flatMap((path) => SVGLoader.createShapes(path));
+  const extruded = new THREE.ExtrudeGeometry(shapes, {
+    depth: 34,
+    curveSegments: 64,
+    bevelEnabled: true,
+    bevelThickness: 26,
+    bevelSize: 18,
+    bevelSegments: 14,
+  });
+  // Merge shared vertices so normals blend across the bevel rings instead of shading each ring flat.
+  extruded.deleteAttribute("normal");
+  extruded.deleteAttribute("uv");
+  const geometry = mergeVertices(extruded, 1e-3);
+  extruded.dispose();
+  geometry.computeVertexNormals();
+  geometry.center();
+  // SVG y points down; a half turn about x flips it without reversing the faces.
+  geometry.rotateX(Math.PI);
+  geometry.computeBoundingSphere();
+  const r = geometry.boundingSphere!.radius;
+  geometry.scale(1 / r, 1 / r, 1 / r);
+  return geometry;
+}
 const smooth = (t: number) => t * t * (3 - 2 * t);
 
 export function BlobCanvas() {
@@ -101,7 +139,7 @@ export function BlobCanvas() {
     camera.position.z = 10;
     const uniforms = { uTime: { value: 0 }, uAlpha: { value: 0 }, uPointer: { value: new THREE.Vector2() } };
     const material = new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms, transparent: true });
-    const mesh = new THREE.Mesh(new THREE.IcosahedronGeometry(1, 96), material);
+    const mesh = new THREE.Mesh(handGeometry(), material);
     scene.add(mesh);
 
     const view = { w: 1, h: 1 };
@@ -156,8 +194,11 @@ export function BlobCanvas() {
       uniforms.uAlpha.value = current.alpha;
       mesh.position.set((current.x * view.w) / 2, (-current.y * view.h) / 2, 0);
       mesh.scale.setScalar((current.size * Math.min(view.w, view.h)) / 2);
-      mesh.rotation.y += reduced ? 0 : dt * 0.08;
-      mesh.rotation.x = uniforms.uPointer.value.y * 0.25;
+      // Sway rather than spin: a hand seen edge-on would disappear.
+      const time = uniforms.uTime.value;
+      mesh.rotation.y = Math.sin(time * 0.35) * 0.45 - uniforms.uPointer.value.x * 0.3;
+      mesh.rotation.x = Math.sin(time * 0.27) * 0.2 - uniforms.uPointer.value.y * 0.25;
+      mesh.rotation.z = -0.25 + Math.sin(time * 0.2) * 0.12;
       el.style.opacity = current.alpha < 0.01 ? "0" : "1";
       renderer.render(scene, camera);
     };

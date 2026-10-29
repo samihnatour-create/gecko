@@ -15,9 +15,12 @@ export function Hero() {
     gsap.registerPlugin(ScrollTrigger);
     const mm = gsap.matchMedia();
     mm.add(motionSettings.active, () => {
-      const el = root.current!;
       gsap.from(".hero-line [data-word]", { yPercent: 110, duration: 1.3, stagger: 0.12, ease: "expo.out", delay: 0.2 });
       gsap.from(".hero-foot > *, .hero-rings circle", { opacity: 0, y: 20, duration: 1, stagger: 0.08, delay: 0.8, ease: "power3.out" });
+    }, root);
+    // Lines drift apart only on desktop, where they're spread across the screen.
+    mm.add(motionSettings.desktop, () => {
+      const el = root.current!;
       const drift = [-14, 18, -10];
       el.querySelectorAll<HTMLElement>(".hero-line").forEach((line, i) => {
         gsap.to(line, {
@@ -33,7 +36,7 @@ export function Hero() {
   const [first, second] = site.hero.headline;
   const [smarter, ...rest] = second.split(" ");
   return (
-    <section ref={root} className="hero" aria-labelledby="hero-title" data-blob="0.06 0.04 0.66 1">
+    <section ref={root} className="hero" aria-labelledby="hero-title" data-blob="0.06 0.04 0.66 1" data-blob-mobile="0.12 0.22 0.62 1">
       <svg className="rings hero-rings" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <circle cx="500" cy="500" r="390" />
         <circle cx="440" cy="540" r="470" />

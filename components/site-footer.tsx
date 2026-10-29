@@ -14,7 +14,7 @@ const sitemap = [
 
 export function SiteFooter() {
   return (
-    <footer className="site-footer" data-blob="0.95 0.55 1.1 1">
+    <footer className="site-footer" data-blob="0.95 0.55 1.1 1" data-blob-mobile="0.9 0.85 0.5 0.6">
       <div className="wrap">
         <div className="footer-top">
           <div className="footer-cta">

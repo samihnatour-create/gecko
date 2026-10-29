@@ -530,16 +530,37 @@ em .word-mask { padding: 0 0.06em 0.2em; margin: 0 -0.06em -0.2em; }
   .row-preview { display: none; }
 }
 @media (max-width: 800px) {
-  .hero-title { font-size: clamp(50px, 14vw, 96px); }
-  .hero-line-1 { left: var(--gutter); top: 15%; white-space: normal; max-width: 6ch; }
-  .hero-line-2 { right: var(--gutter); top: 46%; }
-  .hero-line-3 { left: var(--gutter); top: 62%; }
-  .hero-foot { flex-wrap: wrap; bottom: 90px; }
-  .hero-intro { flex-basis: 100%; }
-  .hero-scroll { display: none; }
+  /* Phone hero: one tight headline block at the top, the hand below it, intro at the bottom. */
+  .hero-title { inset: 104px var(--gutter) auto; font-size: clamp(52px, 15.5vw, 96px); line-height: 0.88; }
+  .hero-line { position: relative; display: block; inset: auto; white-space: normal; }
+  .hero-line-2 { text-align: right; margin-top: 0.06em; }
+  .hero-foot { bottom: 92px; }
+  .hero-intro { max-width: 30ch; }
+  .hero-foot .pill, .hero-scroll { display: none; }
+  .intro { padding-block: 10vh 6vh; }
+  .scrub-text { text-indent: 0; font-size: clamp(24px, 6.8vw, 36px); line-height: 1.05; }
+  .intro-grid { margin-top: 7vh; gap: 28px; }
+  .stats { margin-top: 7vh; }
+  .stats dd, .proof-stats dd { font-size: clamp(64px, 20vw, 96px); }
+  .partners, .work-section, .rows-section { padding-block: 8vh; }
+  .orbit { padding-block: 8vh; }
+  .orbit:not(.is-pinned) .orbit-count { display: none; }
+  .orbit-card { width: 112px; }
+  /* Services become a swipeable row of cards. */
+  .orbit-services {
+    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-inline: calc(var(--gutter) * -1); padding: 4px var(--gutter) 6px;
+  }
+  .orbit-services::-webkit-scrollbar { display: none; }
+  .orbit-services li {
+    flex: 0 0 84%; scroll-snap-align: start; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px; background: rgba(15, 17, 15, 0.7);
+  }
+  .orbit-services h3 { font-size: 30px; }
+  .orbit-foot { margin-top: 36px; }
   .intro-grid, .section-head, .about-story, .faq, .contact-grid, .post-layout { grid-template-columns: 1fr; }
   .section-head > .pill, .section-head > .section-note { justify-self: start; }
-  .stats, .proof-stats, .chapter-list, .commitment-grid, .post-grid, .orbit-services, .footer-cols { grid-template-columns: 1fr; }
+  .stats, .proof-stats, .chapter-list, .commitment-grid, .post-grid, .footer-cols { grid-template-columns: 1fr; }
   .stats, .proof-stats { gap: 0; }
   .stats > div, .proof-stats > div { padding-block: 18px; }
   .work-cols { grid-template-columns: 1fr; }
