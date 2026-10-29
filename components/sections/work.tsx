@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { ArrowUpRight, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight, X } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { site, type Project } from "@/lib/content";
 import { motionSettings } from "@/lib/motion";
-import { CampaignArt } from "../artwork";
 import { ProjectGallery } from "../project-gallery";
 
 function ProjectDialog({
@@ -19,12 +20,9 @@ function ProjectDialog({
   useEffect(() => {
     const el = dialog.current!;
     const previous = document.activeElement as HTMLElement | null;
-    const overflow = document.body.style.overflow;
     el.showModal();
-    document.body.style.overflow = "hidden";
     return () => {
       el.close();
-      document.body.style.overflow = overflow;
       previous?.focus({ preventScroll: true });
     };
   }, []);
@@ -52,11 +50,9 @@ function ProjectDialog({
       <div className="dialog-inner">
         <ProjectGallery key={project.id} project={project} />
         <div className="dialog-copy">
-          <p className="eyebrow">
-            Campaign creative
-          </p>
+          <p className="label">{project.category}</p>
           <h2 id="project-title">{project.title}</h2>
-          <p className="eyebrow">{site.labels.details}</p>
+          <h3>{site.labels.details}</h3>
           <p>{project.brief}</p>
           {project.message && <div className="project-message"><h3>The message</h3><p>{project.message}</p></div>}
           {project.contribution && (
@@ -78,10 +74,10 @@ function ProjectDialog({
               <span key={tag}>{tag}</span>
             ))}
           </div>
-          <a className="button button-dark" href="#contact" onClick={onClose}>
+          <Link className="pill pill-lime" href="/contact">
             {site.labels.project}
-            <ArrowUpRight size={18} />
-          </a>
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </dialog>
@@ -89,126 +85,62 @@ function ProjectDialog({
 }
 
 export function Work() {
-  const [filter, setFilter] = useState(site.labels.allWork);
   const [selected, setSelected] = useState<Project | null>(null);
   const root = useRef<HTMLElement>(null);
-  const categories = [
-    site.labels.allWork,
-    ...site.workNiches,
-  ];
-  const filtered = site.work.filter(
-    (p) => filter === site.labels.allWork || p.niche === filter,
-  );
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const mm = gsap.matchMedia();
-    mm.add(
-      motionSettings.desktop,
-      () => {
-        const cards = gsap.utils.toArray<HTMLElement>(
-          ".work-card",
-          root.current!,
-        );
-        cards.forEach((card, i) => {
-          const target = card.querySelector(".project-button");
-          const direction = i % 2 === 0 ? -1 : 1;
-          // Animate the content, not the grid cell used to measure scroll position.
-          // No pin wrappers: category changes cannot leave orphaned spacing behind.
-          gsap.fromTo(
-            target,
-            {
-              x: direction * 38,
-              y: i % 2 ? 80 : 45,
-              rotation: direction * 2.5,
-            },
-            {
-              x: -direction * 14,
-              y: i % 2 ? -40 : -24,
-              rotation: -direction * 0.5,
-              ease: "none",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 95%",
-                end: "bottom 10%",
-                scrub: 0.8,
-                invalidateOnRefresh: true,
-              },
-            },
-          );
-        });
-      },
-      root,
-    );
-    ScrollTrigger.refresh();
+    // The two columns travel at different speeds, like a slow vertical marquee.
+    mm.add(motionSettings.desktop, () => {
+      gsap.fromTo(".work-col-b", { yPercent: 6 }, {
+        yPercent: -14,
+        ease: "none",
+        scrollTrigger: { trigger: root.current, start: "top bottom", end: "bottom top", scrub: 0.8 },
+      });
+    }, root);
     return () => mm.revert();
-  }, [filter]);
+  }, []);
+  const columns = [site.work.filter((_, i) => i % 2 === 0), site.work.filter((_, i) => i % 2 === 1)];
   return (
-    <section
-      ref={root}
-      className="work-section wrap"
-      id="work"
-      aria-labelledby="work-title"
-    >
-      <div className="section-heading">
-        <div>
-          <h2 id="work-title" data-reveal>
-            {site.workIntro.title}
-            <br />
-            <em>{site.workIntro.accent}</em>
-          </h2>
-        </div>
-        <p className="section-note">{site.workIntro.note}</p>
-      </div>
-      <div className="filters" aria-label={site.labels.filter}>
-        {categories.map((category) => (
-          <button
-            key={category}
-            aria-pressed={filter === category}
-            onClick={() => setFilter(category)}
-          >
-            {category}
-            <span>
-              {category === site.labels.allWork
-                ? site.work.length
-                : site.work.filter((p) => p.niche === category).length}
-            </span>
-          </button>
+    <section ref={root} className="work-section wrap" id="work" aria-labelledby="work-title" data-blob="-0.85 -0.55 0.9 1">
+      <aside className="work-aside">
+        <h2 id="work-title" className="label">{site.workIntro.eyebrow}</h2>
+        <p className="work-count">0{site.work.length}</p>
+        <p className="work-note">{site.workIntro.note}</p>
+        <Link href="/contact" className="pill pill-outline">
+          Start yours <ArrowRight size={14} aria-hidden="true" />
+        </Link>
+      </aside>
+      <div className="work-cols">
+        {columns.map((col, c) => (
+          <div className={`work-col ${c ? "work-col-b" : "work-col-a"}`} key={c}>
+            {col.map((project) => (
+              <article className="work-card" key={project.id}>
+                <button
+                  className="project-button"
+                  data-cursor="View"
+                  onClick={() => setSelected(project)}
+                  aria-label={`View ${project.client}: ${project.title}`}
+                >
+                  <Image
+                    src={project.image}
+                    alt={project.imageAlt}
+                    fill
+                    sizes="(max-width: 700px) 100vw, 33vw"
+                  />
+                  <span className="work-card-meta">
+                    <span>
+                      <strong>{project.client}</strong>
+                      <small>{project.niche}</small>
+                    </span>
+                    <span className="work-plus" aria-hidden="true">+</span>
+                  </span>
+                </button>
+              </article>
+            ))}
+          </div>
         ))}
       </div>
-      <p className="work-preview-note" role="status">
-        {filter === site.labels.allWork ? "Find inspiration for your next ad." : `Explore ${filter.toLowerCase()} creative.`}
-      </p>
-      <div className="work-grid">
-        {filtered.map((project, i) => (
-          <article
-            className={`work-card work-position-${i % 6}`}
-            key={project.id}
-          >
-            <button
-              className="project-button"
-              onClick={() => setSelected(project)}
-              aria-label={`View ${project.client}: ${project.title}`}
-            >
-              <div className="work-art-frame work-art-cover">
-                <CampaignArt project={project} />
-                <span className="project-open" aria-hidden="true">
-                  <ArrowUpRight />
-                </span>
-              </div>
-              <div className="work-meta">
-                <div>
-                  <p>
-                    {project.client}
-                  </p>
-                  <h3>{project.title}</h3>
-                </div>
-                <span className="work-category">{project.niche}</span>
-              </div>
-            </button>
-          </article>
-        ))}
-      </div>
-      {filtered.length === 0 && <p>{site.labels.emptyWork}</p>}
       {selected && (
         <ProjectDialog project={selected} onClose={() => setSelected(null)} />
       )}

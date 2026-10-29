@@ -1,19 +1,18 @@
-import type { Metadata } from "next";
-import Link from "next/link";
 import { site } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
+import { PageHero } from "@/components/page-hero";
 
-export const metadata: Metadata = {
-  title: "Privacy — Gecko Media",
+export const metadata = pageMetadata({
+  title: "Privacy",
   description: "How Gecko Media handles information when you visit our website or contact our team.",
-  alternates: { canonical: `${site.brand.url}/privacy` },
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (
-    <main className="privacy-page wrap">
-      <Link href="/" className="button button-outline">← Back to Gecko Media</Link>
-      <h1>Privacy</h1>
-      <p className="privacy-updated">Updated October 9, 2026</p>
+    <>
+    <PageHero eyebrow="Updated October 9, 2026" title="Privacy" crumbs={[{ name: "Privacy", path: "/privacy" }]} />
+    <div className="prose privacy-page wrap">
       <p>This notice explains how Gecko Media handles information through geckomedia.net. For questions about your information, email <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.</p>
       <h2>When you contact us</h2>
       <p>If you email us, we receive your email address and the information you choose to share. We use it to respond, discuss your project, and arrange a conversation. Our business email is provided through Microsoft 365 from GoDaddy. Please avoid sending passwords, payment details, or sensitive personal information in an enquiry.</p>
@@ -23,6 +22,7 @@ export default function PrivacyPage() {
       <p>Our online booking calendar is provided by Calendly. Calendly processes the details you enter and may use cookies under <a href="https://calendly.com/legal/privacy-notice" target="_blank" rel="noreferrer">its privacy notice</a>. We use the booking details to arrange and attend your call through Microsoft Teams. You can always contact us by email instead.</p>
       <h2>Your choices</h2>
       <p>You can contact us to ask about information you have shared with us, request a correction or deletion, or ask us to stop contacting you. We keep enquiry information for as long as needed to respond and manage the relationship, and where recordkeeping is required.</p>
-    </main>
+    </div>
+    </>
   );
 }

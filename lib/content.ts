@@ -29,94 +29,71 @@ export const site = {
     title: "Gecko Media — Ad Creative & Media Buying for Growing Brands",
   },
   nav: [
-    { label: "Our work", href: "#work" },
-    { label: "What we do", href: "#services" },
-    { label: "Our approach", href: "#reviews" },
+    { label: "Work", href: "/#work" },
+    { label: "Services", href: "/#services" },
+    { label: "Process", href: "/process" },
+    { label: "About", href: "/about" },
+    { label: "Blog", href: "/blog" },
   ],
   labels: {
-    project: "Let’s talk growth",
+    project: "Book a call",
     work: "Explore our creative",
+    watch: "Watch our intro",
     close: "Close project",
     menu: "Menu",
-    previous: "Previous commitment",
-    next: "Next commitment",
     top: "Back to top",
-    sample: "Concept project",
     details: "The creative approach",
     deliverables: "Creative format",
-    emptyWork: "More work is on its way.",
-    allWork: "All work",
     skip: "Skip to content",
-    filter: "Filter work by niche",
     mainNav: "Main navigation",
     mobileNav: "Mobile navigation",
-    featured: "01 — CREATIVE MEETS STRATEGY ↘",
-    signature: "BUILT TO KEEP IMPROVING. ↗",
   },
   hero: {
-    creatives: {
-      left: "/creatives/sheko.webp",
-      right: "/creatives/ornevia.webp",
-      bottom: "/creatives/moments-candles.webp",
-    },
-    eyebrow: "Ad creative & media buying for growing brands",
+    eyebrow: "Ad creative & media buying",
     headline: ["Better creative.", "Smarter ads."],
-    posterTitle: "Creative meets strategy.",
-    posterSubtitle: "gecko media",
     description: "Ad creative and media buying for ecommerce brands and growing businesses. One team. Clear next steps. Less back-and-forth.",
     note: "More time for your business. A clear plan for your ads.",
-    reelLabel: "How we approach your growth",
-    previewLabel: "Concept reel / placeholder artwork",
-    scrollLabel: "Explore our experience and creative",
-    sticker: "gecko",
-    stickerNote: "your growth partner.",
-    reelFooter: "GM® / CREATIVE & MEDIA BUYING",
+    // Hero collage: each creative is shown as a sponsored post in the ad jungle.
+    ads: [
+      { src: "/creatives/sheko.webp", brand: "SHEKO", cta: "Shop now", width: 1080, height: 1920 },
+      { src: "/creatives/campaigns/cruncho/cover.avif", brand: "Cruncho", cta: "Order now", width: 1080, height: 1340 },
+      { src: "/creatives/ornevia.webp", brand: "Ornevia", cta: "Learn more", width: 1080, height: 1920 },
+      { src: "/creatives/campaigns/solv/cover.avif", brand: "Solv", cta: "Shop now", width: 1080, height: 1609 },
+      { src: "/creatives/moments-candles.webp", brand: "Moments & Candles", cta: "Shop now", width: 1080, height: 1350 },
+    ],
     video: {
       src: "",
       poster: "",
       label: "Meet Gecko Media",
-      pending: "Our introduction is coming soon. Explore our creative below.",
-      unavailable: "The video couldn’t load. Explore our creative below.",
+      pending: "Our introduction video is coming soon. In the meantime, explore our work or book a call.",
+      unavailable: "The video couldn’t load. Explore our work or book a call instead.",
     },
     chapters: [
-      {
-        title: "Start with your business.",
-        subtitle: "01 / Understand the goal",
-        word: "think.",
-      },
-      {
-        title: "Give every ad a purpose.",
-        subtitle: "02 / Create and test",
-        word: "make.",
-      },
-      {
-        title: "Learn. Improve. Repeat.",
-        subtitle: "03 / Follow the performance",
-        word: "move.",
-      },
+      { title: "Start with your business.", subtitle: "01 / Understand the goal", description: "Before we make a single ad, we learn what you sell, who buys it, and what growth means for you." },
+      { title: "Give every ad a purpose.", subtitle: "02 / Create and test", description: "Each concept carries a clear message and a hypothesis, so every test teaches us something." },
+      { title: "Learn. Improve. Repeat.", subtitle: "03 / Follow the performance", description: "We read the results, explain them in plain language, and decide together what comes next." },
     ],
   },
+  partners: ["Amazon", "PepsiCo", "Johnson’s", "Cruncho", "Lume", "Solv", "Morf"],
   manifesto: {
     eyebrow: "A partner for the long run",
     before: "Your growth shouldn’t mean",
     accent: "more overhead.",
-    after: "Let’s make the next step clearer.",
     description:
       "We bring creative strategy and media buying together, so your ads and your budget work toward the same goal. We handle execution, keep feedback focused, and use performance data to decide what to improve next.",
   },
   workIntro: {
-    eyebrow: "Explore the creative approach",
-    title: "A clear message.",
-    accent: "A reason to click.",
-    note: "Four creative approaches across ecommerce categories.",
-    detailLabel: "Project preview",
+    eyebrow: "Our work",
+    title: "Creative built",
+    accent: "to stop the scroll.",
+    note: "Four creative approaches across ecommerce categories. Open any project to see the full campaign.",
   },
   workNiches,
   work: workProjects,
   servicesIntro: {
-    eyebrow: "Creative, campaigns, and brand foundations",
-    title: "One team.",
-    accent: "Less overhead.",
+    eyebrow: "Services",
+    title: "Creative, media & brand.",
+    accent: "All under one roof.",
     description:
       "For founders and lean marketing teams who need a partner to handle the work, explain the performance, and keep improving.",
   },
@@ -126,18 +103,21 @@ export const site = {
       description:
         "Turn your offer into image and video ads with clear hooks and a reason to act. We use performance insights to guide new concepts and variations.",
       tags: ["Creative strategy", "Image & video ads", "Creative testing"],
+      cta: "Get better creative",
     },
     {
       title: "Media buying",
       description:
         "Put your budget behind a clear plan. We manage campaigns, analyze what’s working, and explain what we’ll test or change next.",
       tags: ["Campaign management", "Optimization", "Performance reporting"],
+      cta: "Spend smarter",
     },
     {
       title: "Branding",
       description:
         "Make your value easier to understand and your brand easier to recognize. Clear positioning, messaging, and visual identity give your marketing a consistent foundation.",
       tags: ["Positioning", "Brand messaging", "Visual identity"],
+      cta: "Build your brand",
     },
   ],
   impact: {
@@ -148,33 +128,74 @@ export const site = {
       { value: "2", label: "Founders with industry experience" },
     ],
   },
-  reviewsIntro: {
-    eyebrow: "How we work with you",
-    title: "Your business.",
-    accent: "Our commitment.",
-    sampleLabel: "Our founders’ commitments — client feedback coming soon",
-  },
-  reviews: [
+  commitments: [
     {
       quote:
         "You shouldn’t have to manage your agency to keep things moving. We keep feedback focused, next steps clear, and the day-to-day work with us.",
-      name: "Gecko Media",
-      role: "Our commitment to less overhead",
-      initials: "GM",
+      title: "Less overhead",
     },
     {
       quote:
         "Every test should teach us something. We look at what’s working, what isn’t, and what that means for your next creative or campaign decision.",
-      name: "Gecko Media",
-      role: "Our commitment to clear decisions",
-      initials: "GM",
+      title: "Clear decisions",
     },
     {
       quote:
         "We want to understand your business well enough to keep making better decisions together. Your goals guide the work, from the first brief to the next stage of growth.",
-      name: "Gecko Media",
-      role: "Our commitment to a lasting partnership",
-      initials: "GM",
+      title: "A lasting partnership",
+    },
+  ],
+  process: [
+    {
+      title: "Discovery call",
+      summary: "A free 30-minute conversation about what you sell, how you advertise today, and where you’re getting stuck.",
+      outcome: "An honest answer on whether we’re the right fit.",
+    },
+    {
+      title: "Audit & plan",
+      summary: "We review your current ads, offer, and landing pages, then decide what to fix first and what to test.",
+      outcome: "A clear plan with priorities, test ideas, and budget direction.",
+    },
+    {
+      title: "Creative production",
+      summary: "Concepts, hooks, scripts, and finished image and video ads, made for the placements you run.",
+      outcome: "Ready-to-launch ads, with one focused round of feedback.",
+    },
+    {
+      title: "Launch & test",
+      summary: "Campaigns structured to learn quickly. Every ad goes live with a hypothesis, not a hunch.",
+      outcome: "Live campaigns and a test log you can follow.",
+    },
+    {
+      title: "Report & improve",
+      summary: "Plain-language reporting on what worked, what didn’t, and what we’ll change next. Then we repeat.",
+      outcome: "Better ads every round, and fewer surprises.",
+    },
+  ],
+  faq: [
+    {
+      q: "Who do you work with?",
+      a: "Ecommerce brands and growing businesses, usually founders or lean marketing teams who want one partner to handle creative and media buying without adding more management overhead.",
+    },
+    {
+      q: "Can we hire you for creative only, or media buying only?",
+      a: "Yes. Ad creative, media buying, and branding work on their own. They tend to work best together, because the same team that reads the results makes the next round of ads.",
+    },
+    {
+      q: "How involved do we need to be?",
+      a: "We keep feedback focused and the day-to-day work with us. Expect a kickoff, clear review points for creative, and regular updates, not a stream of small requests.",
+    },
+    {
+      q: "How do you report on performance?",
+      a: "In plain language. Each report explains what we tested, what we learned, and what we plan to change next, so the numbers always come with a decision.",
+    },
+    {
+      q: "What does the first call cost?",
+      a: "Nothing. The 30-minute discovery call is free. If we’re not the right fit, we’ll tell you on the call.",
+    },
+    {
+      q: "How is pricing set?",
+      a: "It depends on scope: which services you need, how much creative you want each month, and the size of your ad accounts. We recommend an option after the discovery call.",
     },
   ],
   contact: {
@@ -183,7 +204,7 @@ export const site = {
     accent: "better ads?",
     description:
       "Tell us what you sell, how you’re advertising, and where you’re getting stuck. We’ll discuss how creative, media buying, or branding could help—and whether we’re the right fit.",
-    cta: "Let’s talk growth",
+    cta: "Book a call",
     email: "hello@geckomedia.net",
     calendarUrl: process.env.NEXT_PUBLIC_CALENDLY_URL || "https://calendly.com/geckomedia/30min",
     meetingTitle: "Let’s talk growth.",
@@ -195,9 +216,5 @@ export const site = {
   footer: {
     note: "Creative strategy. Media buying. A partner for the long run.",
     copyright: "Gecko Media. All rights reserved.",
-    links: [
-      { label: "Email us", href: "mailto:hello@geckomedia.net" },
-      { label: "Privacy", href: "/privacy" },
-    ] as { label: string; href: string }[],
   },
 };
