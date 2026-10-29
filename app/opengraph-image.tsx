@@ -7,7 +7,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function OpenGraphImage() {
-  const logo = await readFile(join(process.cwd(), "public", "gecko-logo.png"));
+  const logo = await readFile(join(process.cwd(), "public", "gecko-mark.png"));
   return new ImageResponse(
     (
       <div

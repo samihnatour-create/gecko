@@ -1,5 +1,5 @@
 "use client";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -62,11 +62,18 @@ export function ServicesOrbit() {
     return () => mm.revert();
   }, []);
   return (
-    <section ref={root} className="orbit" id="services" aria-labelledby="services-title" data-blob="0 0.02 0.4 1">
+    <section
+      ref={root}
+      className="orbit"
+      id="services"
+      aria-labelledby="services-title"
+      data-blob="0 0.02 0.4 1"
+      style={{ "--services": site.services.length } as CSSProperties}
+    >
       <div className="orbit-sticky">
         <div className="orbit-head wrap">
           <h2 id="services-title" className="label">{site.servicesIntro.eyebrow}</h2>
-          <p className="orbit-count" aria-hidden="true">0{active + 1} / 0{site.services.length}</p>
+          <p className="orbit-count" aria-hidden="true">{String(active + 1).padStart(2, "0")} / {String(site.services.length).padStart(2, "0")}</p>
         </div>
         <div className="orbit-ring" aria-hidden="true">
           {creatives.map((src) => (
@@ -78,7 +85,7 @@ export function ServicesOrbit() {
         <ol className="orbit-services wrap">
           {site.services.map((s, i) => (
             <li key={s.title} className={i === active ? "is-active" : ""}>
-              <span className="label">0{i + 1}</span>
+              <span className="label">{String(i + 1).padStart(2, "0")}</span>
               <h3>{s.title}</h3>
               <p>{s.description}</p>
               <p className="orbit-tags">{s.tags.join(" · ")}</p>

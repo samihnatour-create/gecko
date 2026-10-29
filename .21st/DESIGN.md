@@ -1,6 +1,6 @@
 # Gecko Media design direction
 
-Playful editorial, approved September 24, 2026. White-led sections, expressive sans-serif/italic serif typography, asymmetric concept campaigns, and dark service section. The supplied official logo is preserved as public/gecko-logo.png. Lime, yellow and cyan derive from its visual identity. Campaign artwork has its own secondary colors.
+Playful editorial, approved September 24, 2026. White-led sections, expressive sans-serif/italic serif typography, asymmetric concept campaigns, and dark service section. The supplied official logo is preserved as public/gecko-mark.png. Lime, yellow and cyan derive from its visual identity. Campaign artwork has its own secondary colors.
 
 21st source: Scroll-Triggered Video Hero by daiwiikharihar, catalog id 9701, registry slug daiwiikharihar/scroll-triggered-video-hero. Source inspected through the authenticated CLI before implementation. Chapter crossfades, pinned media and progress were adapted using GSAP; no demo footage is reused.
 

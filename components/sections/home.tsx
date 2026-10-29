@@ -49,8 +49,13 @@ export function Partners() {
       </div>
       <ul className="partner-grid">
         {site.partners.map((brand, i) => (
-          <li key={brand} data-reveal className={`partner partner-${i % 3}`}>
-            <span>{brand}</span>
+          <li key={brand.name} data-reveal className={`partner partner-${i % 3}`}>
+            {brand.logo ? (
+              // Plain img: SVG logos need no optimisation and keep their own aspect ratio.
+              <img src={brand.logo} alt={brand.name} className="partner-logo" loading="lazy" />
+            ) : (
+              <span>{brand.name}</span>
+            )}
           </li>
         ))}
         <li className="partner partner-cta" data-reveal>

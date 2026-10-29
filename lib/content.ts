@@ -24,8 +24,8 @@ export const site = {
   brand: {
     name: "gecko media",
     url: "https://geckomedia.net",
-    logo: "/gecko-logo.png",
-    description: "Ad creative, media buying, and branding for ecommerce brands and growing businesses. One team to test, learn, and improve your ads with less back-and-forth.",
+    logo: "/gecko-mark.png",
+    description: "Ad creative, media buying, Google Ads, SEO, GEO & AEO, email and SMS marketing, and branding for ecommerce brands and growing businesses. One team to test, learn, and improve with less back-and-forth.",
     title: "Gecko Media — Ad Creative & Media Buying for Growing Brands",
   },
   nav: [
@@ -74,7 +74,16 @@ export const site = {
       { title: "Learn. Improve. Repeat.", subtitle: "03 / Follow the performance", description: "We read the results, explain them in plain language, and decide together what comes next." },
     ],
   },
-  partners: ["Amazon", "PepsiCo", "Johnson’s", "Cruncho", "Lume", "Solv", "Morf"],
+  // Partners with a logo file in /public/partners show the logo; the rest show their name.
+  partners: [
+    { name: "Amazon", logo: "/partners/amazon.svg" },
+    { name: "PepsiCo", logo: "/partners/pepsico.svg" },
+    { name: "SC Johnson", logo: "/partners/sc-johnson.svg" },
+    { name: "Cruncho" },
+    { name: "Lume" },
+    { name: "Solv" },
+    { name: "Morf" },
+  ] as { name: string; logo?: string }[],
   manifesto: {
     eyebrow: "A partner for the long run",
     before: "Your growth shouldn’t mean",
@@ -92,10 +101,10 @@ export const site = {
   work: workProjects,
   servicesIntro: {
     eyebrow: "Services",
-    title: "Creative, media & brand.",
+    title: "Creative, media & growth.",
     accent: "All under one roof.",
     description:
-      "For founders and lean marketing teams who need a partner to handle the work, explain the performance, and keep improving.",
+      "For founders and lean marketing teams who need one partner across paid ads, search, and retention: someone to handle the work, explain the performance, and keep improving.",
   },
   services: [
     {
@@ -111,6 +120,34 @@ export const site = {
         "Put your budget behind a clear plan. We manage campaigns, analyze what’s working, and explain what we’ll test or change next.",
       tags: ["Campaign management", "Optimization", "Performance reporting"],
       cta: "Spend smarter",
+    },
+    {
+      title: "Google Ads",
+      description:
+        "Show up when people are already searching for what you sell. We build and manage Search, Shopping, and Performance Max campaigns, research the keywords worth paying for, and cut the ones that waste budget.",
+      tags: ["Search & Shopping", "Keyword research", "Keyword optimization"],
+      cta: "Win more searches",
+    },
+    {
+      title: "SEO, GEO & AEO",
+      description:
+        "Get found on Google and in AI answers. We improve your site’s technical health, content, and structure so search engines rank it (SEO), generative AI tools recommend it (GEO), and answer engines quote it (AEO).",
+      tags: ["Search engine optimization", "Generative engine optimization", "Answer engine optimization"],
+      cta: "Get found",
+    },
+    {
+      title: "Email marketing",
+      description:
+        "Turn first-time buyers into regulars. We plan, write, and design campaigns and automated flows, from welcome series to abandoned cart and win-back, and test what drives repeat orders.",
+      tags: ["Campaigns", "Automated flows", "List growth"],
+      cta: "Grow repeat sales",
+    },
+    {
+      title: "SMS marketing",
+      description:
+        "Reach customers where they read every message. Short, well-timed texts for launches, offers, and cart recovery, sent with consent and without wearing out your list.",
+      tags: ["Campaigns", "Cart recovery", "Consent & compliance"],
+      cta: "Start texting",
     },
     {
       title: "Branding",
@@ -178,8 +215,8 @@ export const site = {
       a: "Ecommerce brands and growing businesses, usually founders or lean marketing teams who want one partner to handle creative and media buying without adding more management overhead.",
     },
     {
-      q: "Can we hire you for creative only, or media buying only?",
-      a: "Yes. Ad creative, media buying, and branding work on their own. They tend to work best together, because the same team that reads the results makes the next round of ads.",
+      q: "Can we hire you for just one service?",
+      a: "Yes. Every service works on its own, whether that’s ad creative, Google Ads, SEO, or email and SMS. They tend to work best together, because the same team that reads the results makes the next round of ads, pages, and messages.",
     },
     {
       q: "How involved do we need to be?",

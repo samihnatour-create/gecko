@@ -43,7 +43,7 @@ const organization = {
       logo: absolute(site.brand.logo),
       email: site.contact.email,
       description: site.brand.description,
-      knowsAbout: ["Ad creative", "Media buying", "Branding", "Creative testing", "Ecommerce advertising"],
+      knowsAbout: [...site.services.map((service) => service.title), "Creative testing", "Ecommerce advertising"],
     },
     {
       "@type": "WebSite",
